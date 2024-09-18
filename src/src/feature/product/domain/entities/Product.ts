@@ -2,7 +2,7 @@ import Entity from "@/core/domain/Entity";
 
 export class Product extends Entity<Product> {
     constructor(
-        id: string,
+        id: string | undefined,
         public name: string,
         public email: string,
     ) {

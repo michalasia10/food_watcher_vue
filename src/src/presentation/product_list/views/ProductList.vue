@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import Footer from "@/core_ui/components/Footer.vue"
 import {useProductStore} from '@/presentation/product_list/composables/productsStore'
 import {storeToRefs} from "pinia";
 import {onMounted} from "vue";
 
+// store(s)
 const productStore = useProductStore()
+
+// ref(s)
 const {isLoading, error, products} = storeToRefs(productStore)
+
+// method(s)
 const {fetchProducts} = productStore
 
 onMounted(() => {
@@ -15,13 +21,7 @@ onMounted(() => {
 </script>
 
 <template>
-<v-container>
-    <v-row>
-      <v-col cols="12">
-        <h1 class="text-h3 mb-4">Products</h1>
-      </v-col>
-    </v-row>
-
+  <v-container>
     <v-row v-if="isLoading">
       <v-col cols="12">
         <v-progress-circular indeterminate color="primary"></v-progress-circular>
@@ -42,8 +42,13 @@ onMounted(() => {
       </v-col>
     </v-row>
   </v-container>
+  <Footer>
+    <template #additional-nav-buttons>
+      <v-btn value="add">
+        <v-icon>mdi-plus</v-icon>
+        Add
+      </v-btn>
+    </template>
+  </Footer>
+
 </template>
-
-<style scoped>
-
-</style>
