@@ -7,7 +7,7 @@ export class ProductService {
         this.productRepository = productRepository;
     }
 
-    async findAll(): Promise<Product[]> {
-        return await this.productRepository.findAll();
+    async findAll(page: number, limit: number, queryString: string = ''): Promise<Product[]> {
+        return await this.productRepository.findAll(page, limit, queryString);
     }
 }

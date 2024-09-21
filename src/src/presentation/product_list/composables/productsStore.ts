@@ -17,10 +17,16 @@ export const useProductStore = defineStore('product', () => {
     const products = ref<Product[]>([])
 
 
-    async function fetchProducts() {
+    async function fetchProducts(page: number, limit: number, queryString: string) {
         isLoading.value = true
         try {
-            products.value = await productService.findAll()
+            const newProducts = await productService.findAll(page, limit, queryString)
+            if (newProducts.length === 0) {
+                error.value = 'No products found'
+            } else {
+                error.value = null
+                products.value = newProducts
+            }
         } catch (e) {
             error.value = e
         } finally {

@@ -18,9 +18,24 @@ export class ProductRepository implements IProductRepository {
         }
     }
 
-    async findAll(): Promise<Product[]> {
+    async findAll(page: number, limit: number, queryString?: string): Promise<Product[]> {
         try {
-            const response = await this.axiosObject.get(this.endpoint);
+            const queryParams = queryString ? {
+                skip: page,
+                limit: limit,
+                q: queryString
+            } : {
+                skip: page,
+                limit: limit
+            }
+
+
+            const response = await this.axiosObject.get(
+                this.endpoint,
+                {
+                    params: queryParams
+                }
+            );
             return response.data.map((product: any) => Product.fromJSON(product));
         } catch (error) {
             console.error('Error fetching products:', error);

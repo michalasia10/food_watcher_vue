@@ -7,7 +7,6 @@ import PathEnum from "@/core/constant/paths";
 
 
 const route = useRoute()
-const router = useRouter()
 
 const mainStore = useMainStore()
 const {logOut} = mainStore
@@ -26,9 +25,10 @@ const user = ref({
 const currentPageTitle = computed(() => {
   switch (route.path) {
     case PathEnum.ROOT:
-      return 'Main'
+      // ToDo: use i18n
+      return 'Główna'
     case PathEnum.PRODUCTS:
-      return 'Products'
+      return 'Produkty'
     default:
       return 'FoodWatcher'
   }
@@ -53,13 +53,13 @@ const currentPageTitle = computed(() => {
       <v-list density="compact" nav>
         <v-list-item
             prepend-icon="mdi-view-dashboard"
-            title="Main"
+            title="Główna"
             value="macro"
             :to="PathEnum.ROOT"
         />
         <v-list-item
             prepend-icon="mdi-food-apple"
-            title="Products"
+            title="Produkty"
             value="products"
             :to="PathEnum.PRODUCTS"
         />
