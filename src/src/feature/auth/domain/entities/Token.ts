@@ -6,7 +6,6 @@ export class Token {
     }
 
     static fromJSON(json: any): Token {
-        console.log('wtf',json)
         return new Token(
             json.api_token,
             json.user_id,
