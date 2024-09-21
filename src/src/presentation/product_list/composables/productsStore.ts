@@ -3,12 +3,14 @@ import {defineStore} from 'pinia'
 import {ProductRepository} from "@/feature/product/infra/repo/ProductRepository";
 import {ProductService} from "@/feature/product/app/service/ProductService";
 import {Product} from "@/feature/product/domain/entities/Product";
-// import {useMainStore} from "@/presentation/mainStore";
+import {useMainStore} from "@/presentation/mainStore";
 
-export const useProductStore = defineStore('user', () => {
-    const productRepository = new ProductRepository();
+export const useProductStore = defineStore('product', () => {
+    const mainStore = useMainStore();
+    const {axiosObject} = mainStore
+
+    const productRepository = new ProductRepository(axiosObject);
     const productService = new ProductService(productRepository);
-    // const mainStore = useMainStore();
 
     const isLoading = ref<boolean>(false)
     const error = ref<any>(null)
