@@ -85,6 +85,7 @@ onMounted(() => {
               label="Szukaj..."
               single-line
               clearable
+              @click:clear="resetError"
               hide-details
               max-width="300"
           />
@@ -98,8 +99,4 @@ onMounted(() => {
   </ContainerWithScroll>
 </template>
 <style scoped>
-.full-height-container {
-  height: calc(100vh - 152px);
-  overflow-y: auto;
-}
 </style>
