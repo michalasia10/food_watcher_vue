@@ -27,7 +27,7 @@ export const useAuthStore = defineStore('auth', () => {
             mainStore.setUserId(token?.userId ? token.userId : '')
         } finally {
             isLoading.value = false
-            mainStore.moveToPage(PathEnum.PRODUCTS.valueOf())
+            mainStore.moveToPage(PathEnum.MYDAY.valueOf())
         }
     }
 

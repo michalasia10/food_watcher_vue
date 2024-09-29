@@ -29,6 +29,8 @@ const currentPageTitle = computed(() => {
       return 'Główna'
     case PathEnum.PRODUCTS:
       return 'Produkty'
+    case PathEnum.MYDAY:
+      return 'My Day'
     default:
       return 'FoodWatcher'
   }
@@ -52,22 +54,16 @@ const currentPageTitle = computed(() => {
       <v-divider></v-divider>
       <v-list density="compact" nav>
         <v-list-item
-            prepend-icon="mdi-view-dashboard"
-            title="Główna"
-            value="macro"
-            :to="PathEnum.ROOT"
+            prepend-icon="mdi-calendar-month"
+            title="My DAY"
+            value="day"
+            :to="PathEnum.MYDAY"
         />
         <v-list-item
             prepend-icon="mdi-food-apple"
             title="Produkty"
             value="products"
             :to="PathEnum.PRODUCTS"
-        />
-        <v-list-item
-            prepend-icon="mdi-food-apple"
-            title="My DAY"
-            value="day"
-            :to="PathEnum.MYDAY"
         />
       </v-list>
 

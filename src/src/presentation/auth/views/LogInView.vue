@@ -2,7 +2,7 @@
 import {ref} from 'vue'
 import {storeToRefs} from "pinia";
 import {useAuthStore} from "@/presentation/auth/composables/authStore";
-import {usernameRules, passwordRules} from "@/presentation/auth/views/helpers";
+import {usernameRules, passwordRules} from "@/presentation/auth/views/rules";
 
 // store(s)
 const authStore = useAuthStore()

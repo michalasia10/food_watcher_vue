@@ -2,7 +2,7 @@
 import {ref} from 'vue'
 import {storeToRefs} from "pinia";
 import {useAuthStore} from "@/presentation/auth/composables/authStore";
-import {emailRules, passwordRules, usernameRules} from "@/presentation/auth/views/helpers";
+import {emailRules, passwordRules, usernameRules} from "@/presentation/auth/views/rules";
 
 // store(s)
 const authStore = useAuthStore()
@@ -75,7 +75,7 @@ const registerCallback = () => {
                 indeterminate
                 color="white"
                 size="24"
-            ></v-progress-circular>
+            />
             <span v-else>Zaczynamy!</span>
           </v-btn>
         </v-form>
