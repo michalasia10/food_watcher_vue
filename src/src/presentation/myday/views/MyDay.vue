@@ -191,7 +191,7 @@ const changeDate = (value) => {
       <template #additional-nav-buttons>
         <v-btn value="add" @click="dialogShow = true">
           <v-icon>mdi-calendar-plus</v-icon>
-          Add
+          Dodaj produkt
         </v-btn>
       </template>
     </footer-component>
