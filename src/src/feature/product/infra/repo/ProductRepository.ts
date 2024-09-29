@@ -18,7 +18,7 @@ export class ProductRepository implements IProductRepository {
         }
     }
 
-    async findAll(page: number, limit: number, queryString?: string): Promise<Product[]> {
+    async findAll(page: number = 0, limit: number = 20, queryString?: string): Promise<Product[]> {
         try {
             const queryParams = queryString ? {
                 skip: page,
@@ -50,4 +50,5 @@ export class ProductRepository implements IProductRepository {
             console.error('Error saving product:', error);
         }
     }
+
 }

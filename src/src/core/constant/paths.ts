@@ -4,6 +4,7 @@ enum PathEnum {
     REGISTER = '/auth/register',
     PRODUCTS = '/products',
     SETTINGS = '/',
+    MYDAY = '/myday',
     HELP = '/'
 }
 

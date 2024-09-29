@@ -3,7 +3,7 @@ import {useProductStore} from '@/presentation/product_list/composables/productsS
 import {storeToRefs} from "pinia";
 import {onMounted, ref} from "vue";
 import ProductCard from "@/presentation/product_list/components/ProductCard.vue";
-import Footer from "@/core_ui/components/Footer.vue";
+import FooterComponent from "@/core_ui/components/FooterComponent.vue";
 import ContainerWithScroll from "@/core_ui/components/ContainerWithScroll.vue";
 
 
@@ -32,7 +32,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ContainerWithScroll
+  <container-with-scroll
       :is-loading="isLoading"
       :items="products"
       :limit="limit"
@@ -78,7 +78,7 @@ onMounted(() => {
           <ProductCard :product="product"/>
         </v-col>
       </v-row>
-      <Footer>
+      <footer-component>
         <template #additional-nav-buttons>
           <v-text-field
               v-model="searchValue"
@@ -94,9 +94,9 @@ onMounted(() => {
             Add
           </v-btn>
         </template>
-      </Footer>
+      </footer-component>
     </template>
-  </ContainerWithScroll>
+  </container-with-scroll>
 </template>
 <style scoped>
 </style>

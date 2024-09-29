@@ -8,12 +8,11 @@ import {usernameRules, passwordRules} from "@/presentation/auth/views/helpers";
 const authStore = useAuthStore()
 
 // ref(s)
-const {isLoading, error} = storeToRefs(authStore)
+const {isLoading} = storeToRefs(authStore)
 const showPassword = ref<boolean>(false)
 
 const username = ref<string>('')
 const password = ref<string>('')
-const email = ref<string>('')
 const isValidForm = ref<boolean>(false)
 
 // method(s)

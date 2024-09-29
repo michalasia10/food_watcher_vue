@@ -3,6 +3,7 @@ import {defineProps} from 'vue';
 import {Product} from '@/feature/product/domain/entities/Product';
 import MacroChip from "@/presentation/product_list/components/MacroChip.vue";
 
+
 defineProps<{
   product: Product
 }>();
@@ -30,14 +31,14 @@ const gramUnit = 'g'
     <v-divider></v-divider>
 
     <v-card-text>
-      <MacroChip
+      <macro-chip
           icon="mdi-food-drumstick"
           color="green"
           css-class="ml-8"
           :macro-unit="gramUnit"
           :macro-value="product.macro.protein"
       />
-      <MacroChip
+      <macro-chip
           icon="mdi-cheese"
           color="yellow"
           cssClass="ml-3"
@@ -45,7 +46,7 @@ const gramUnit = 'g'
           :macro-value="product.macro.fat"
       />
 
-      <MacroChip
+      <macro-chip
           icon="mdi-barley"
           color="blue"
           cssClass="ml-3"
@@ -53,7 +54,7 @@ const gramUnit = 'g'
           :macro-value="product.macro.carbs"
       />
 
-      <MacroChip
+      <macro-chip
           icon="mdi-fire"
           color="red"
           cssClass="ml-3"

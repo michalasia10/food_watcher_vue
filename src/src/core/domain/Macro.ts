@@ -16,6 +16,23 @@ export class Macro extends Entity<Macro> {
         this.fat = Macro.toFixedValue(fat);
     }
 
+    get getKcal(): number {
+        return Macro.toFixedValue(this.kcal);
+    }
+
+    get getProtein(): number {
+        return Macro.toFixedValue(this.protein);
+    }
+
+    get getCarbs(): number {
+        return Macro.toFixedValue(this.carbs);
+    }
+
+    get getFat(): number {
+        return Macro.toFixedValue(this.fat);
+    }
+
+
     static toFixedValue(value: number | undefined | null): number {
         const val = isNil(value) ? 0.0 : value;
         return parseFloat(val?.toPrecision(3));

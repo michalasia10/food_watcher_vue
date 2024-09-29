@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory, type RouteRecordRaw} from 'vue-router'
 import {useMainStore} from "@/presentation/mainStore";
 import ProductList from "@/presentation/product_list/views/ProductList.vue";
+import MyDay from "@/presentation/myday/views/MyDay.vue";
 import MainView from "@/presentation/MainView.vue";
 import PathEnum, {publicRoutes} from "@/core/constant/paths";
 import authRoute from "@/core/router/authRoute";
@@ -15,6 +16,10 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'products',
                 component: ProductList
+            },
+            {
+                path: 'myday',
+                component: MyDay
             }
         ]
     },

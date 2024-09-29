@@ -63,6 +63,12 @@ const currentPageTitle = computed(() => {
             value="products"
             :to="PathEnum.PRODUCTS"
         />
+        <v-list-item
+            prepend-icon="mdi-food-apple"
+            title="My DAY"
+            value="day"
+            :to="PathEnum.MYDAY"
+        />
       </v-list>
 
       <template v-slot:append>
