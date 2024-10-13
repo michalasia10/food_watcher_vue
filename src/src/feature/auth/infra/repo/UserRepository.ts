@@ -11,7 +11,7 @@ export class UserRepository implements IUserRepository {
 
     async findById(id: string): Promise<User | null> {
         try {
-            const response = await this.axiosObject.get(`${this.endpoint}/${id}`);
+            const response = await this.axiosObject.get(`${this.endpoint}/${id}/`);
             return User.fromJSON(response.data);
         } catch (error) {
             console.error('Error fetching product:', error);
@@ -54,7 +54,7 @@ export class UserRepository implements IUserRepository {
     async login(user: User): Promise<Token | null> {
         try {
             const response = (await this.axiosObject
-                .post(`${this.endpoint}/login`, user.toJsonLogin()))
+                .post(`${this.endpoint}/login/`, user.toJsonLogin()))
                 .data
 
             return Token.fromJSON(response)

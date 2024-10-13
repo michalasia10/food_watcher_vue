@@ -10,7 +10,7 @@ export class ProductRepository implements IProductRepository {
 
     async findById(id: string): Promise<Product | null> {
         try {
-            const response = await this.axiosObject.get(`${this.endpoint}/${id}`);
+            const response = await this.axiosObject.get(`${this.endpoint}/${id}/`);
             return Product.fromJSON(response.data);
         } catch (error) {
             console.error('Error fetching product:', error);
