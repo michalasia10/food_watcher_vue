@@ -2,7 +2,6 @@ import {ref} from 'vue'
 import {defineStore} from 'pinia'
 import {UserRepository} from "@/feature/auth/infra/repo/UserRepository";
 import {UserService} from "@/feature/auth/app/service/UserService";
-import {User} from "@/feature/auth/domain/entities/User";
 import {useMainStore} from "@/presentation/mainStore";
 import PathEnum from "@/core/constant/paths"
 
@@ -16,7 +15,6 @@ export const useAuthStore = defineStore('auth', () => {
 
     const isLoading = ref<boolean>(false)
     const error = ref<any>(null)
-    const users = ref<User[]>([])
 
 
     async function login(username: string, password: string) {

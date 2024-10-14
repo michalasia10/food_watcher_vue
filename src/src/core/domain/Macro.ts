@@ -32,6 +32,12 @@ export class Macro extends Entity<Macro> {
         return Macro.toFixedValue(this.fat);
     }
 
+    get strRepresentation(): string {
+        return `${this.getKcal.toFixed(2)} kcal |
+         ${this.getProtein.toFixed(2)} g | 
+         ${this.getCarbs.toFixed(2)} g |
+         ${this.getFat.toFixed(2)} g `;
+    }
 
     static toFixedValue(value: number | undefined | null): number {
         const val = isNil(value) ? 0.0 : value;

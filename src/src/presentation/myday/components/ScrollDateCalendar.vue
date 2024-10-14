@@ -4,7 +4,7 @@
     <div class="date-container">
       <v-btn
           v-for="(date, index) in visibleDates"
-          :key="date.toISOString()"
+          :key="index"
           :class="{ 'v-btn--active': isCurrentDate(date) }"
           variant="text"
           @click="selectDate(date)"
@@ -91,7 +91,7 @@ onMounted(() => {
   centerSelectedDate();
 });
 
-watch(() => selectedDate.value, (newDate) => {
+watch(() => selectedDate.value, () => {
   centerSelectedDate();
 });
 </script>

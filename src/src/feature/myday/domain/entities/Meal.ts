@@ -1,19 +1,26 @@
+import {ConsumedProduct} from '@/feature/myday/domain/entities/ConsumedProduct';
+import {Macro} from '@/core/domain/Macro';
+
 export class Meal {
     constructor(
-        public date: Date,
-        public productId: string,
-        public weightInGrams: number,
-        public type: string
+        public type: string,
+        public products: ConsumedProduct[],
+        public macro: Macro,
     ) {
     }
 
-    toJSON() {
-        return {
-            date: this.date.toISOString(),
-            product_id: this.productId,
-            weight_in_grams: this.weightInGrams,
-            type: this.type
-        }
+    static fromJSON(json: any): Meal {
+        return new Meal(
+            json.meal,
+            json.products.map((product: any) => ConsumedProduct.fromJSON(product)),
+            new Macro(
+                '',
+                json.summary.calories,
+                json.summary.protein,
+                json.summary.carbs,
+                json.summary.fat,
+            )
+        );
     }
 
 }

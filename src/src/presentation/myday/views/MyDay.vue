@@ -1,54 +1,29 @@
 <script setup lang="ts">
-import ScrollDateCalendar from "@/presentation/myday/components/ScrollDateCalendar.vue";
 import FooterComponent from "@/core_ui/components/FooterComponent.vue";
+// @ts-ignore
+import ScrollDateCalendar from "@/presentation/myday/components/ScrollDateCalendar.vue";
 import MacroProgressLinear from "@/presentation/myday/components/MacroProgressLinear.vue";
 
-import {ref} from 'vue'
+import {onMounted, ref, watch} from 'vue'
+import {storeToRefs} from "pinia";
 import AddMealFormula from "@/presentation/myday/components/AddMealFormula.vue";
+import {useMyDayStore} from "@/presentation/myday/composables/myDayStore";
+import {summaryMapper} from "@/presentation/myday/views/summaryMapper";
+import MealTypeMapper from "@/presentation/myday/views/mealTypeMapper";
 
-const weekDays = ref([
-  {short: 'P', date: '11', current: false},
-  {short: 'W', date: '12', current: false},
-  {short: 'Ś', date: '13', current: false},
-  {short: 'C', date: '14', current: true},
-  {short: 'P', date: '15', current: false},
-  {short: 'S', date: '16', current: false},
-  {short: 'N', date: '17', current: false},
-])
-const mealsB = ref([
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Banan', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-])
-const mealsL = ref([
-  {name: 'Apple', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Apple', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-  {name: 'Apple', weight: 130, calories: 126, protein: 1.3, fat: 0.4, carbs: 0.4},
-])
+// store(s)
+const myDayStore = useMyDayStore()
 
-const macros = ref([
-  {name: 'Białka', current: 150, target: 120, color: '#4CAF50'},
-  {name: 'Tłuszcze', current: 40, target: 70, color: '#FFEB3B'},
-  {name: 'Węgle', current: 88, target: 373, color: '#2196F3'},
-  {name: 'Kcal', current: 22, target: 373, color: '#F44336'},
-])
+// ref(s)
+const {isLoading, error, myDay} = storeToRefs(myDayStore)
+const searchValue = ref<string>('')
+const summaryKey = ref<number>(0)
 
-const selectedDate = ref(new Date());
+// method(s)
+const {fetchMyDay} = myDayStore
+
+
+const selectedDate = ref<Date>(new Date());
 const dialogShow = ref(false);
 
 
@@ -61,9 +36,23 @@ const onCancel = () => {
   dialogShow.value = false
 }
 
-const changeDate = (value) => {
+const changeDate = (value: Date) => {
   selectedDate.value = value
+  fetchMyDay(value)
 }
+
+watch(myDay, async (newValue, oldValue) => {
+      if (oldValue !== newValue) {
+        console.log('myDay', newValue, oldValue)
+        summaryKey.value += 1
+      }
+    }
+)
+
+onMounted(() => {
+  fetchMyDay(selectedDate.value)
+})
+
 
 </script>
 
@@ -79,47 +68,23 @@ const changeDate = (value) => {
     <v-divider/>
     <v-card class="scrollable-section">
       <v-card-text class="scrollable-content">
-        <v-expansion-panels>
-          <v-expansion-panel>
+        <v-expansion-panels v-if="myDay">
+          <v-expansion-panel v-for="meal in myDay.meals" :key="meal.type">
             <v-expansion-panel-title>
               <v-list-item>
-                <v-list-item-title class="text-h6">Śniadanie</v-list-item-title>
-                <v-list-item-subtitle>391 kcal 13.3 10.2 61</v-list-item-subtitle>
-              </v-list-item>
-            </v-expansion-panel-title>
-            <v-expansion-panel-text>
-              <v-list-item v-for="(item, index) in mealsB" :key="index">
-                <v-list-item-title>{{ item.name }}</v-list-item-title>
+                <v-list-item-title class="text-h6">{{ MealTypeMapper.fromString(meal.type) }}</v-list-item-title>
                 <v-list-item-subtitle>
-                  {{ item.weight }}g
-                  {{ item.calories }} kcal
-                  {{ item.protein }} g
-                  {{ item.fat }} g
-                  {{ item.carbs }} g
+                  Kalorie | Białko | Tłuszcze | Węglowodany
+                  <br>
+                  {{ meal.macro.strRepresentation }}
                 </v-list-item-subtitle>
-                <template v-slot:append>
-                  <v-btn icon="mdi-close" variant="text"></v-btn>
-                </template>
-                <v-divider/>
-              </v-list-item>
-            </v-expansion-panel-text>
-          </v-expansion-panel>
-          <v-expansion-panel>
-            <v-expansion-panel-title>
-              <v-list-item>
-                <v-list-item-title class="text-h6">Drugie</v-list-item-title>
-                <v-list-item-subtitle>500 kcal 13.3 10.2 61</v-list-item-subtitle>
               </v-list-item>
             </v-expansion-panel-title>
             <v-expansion-panel-text>
-              <v-list-item v-for="(item, index) in mealsL" :key="index">
-                <v-list-item-title>{{ item.name }}</v-list-item-title>
+              <v-list-item v-for="(product, index) in meal.products" :key="index">
+                <v-list-item-title>{{ product.baseProduct.name }}</v-list-item-title>
                 <v-list-item-subtitle>
-                  {{ item.weight }}g
-                  {{ item.calories }} kcal
-                  {{ item.protein }} g
-                  {{ item.fat }} g
-                  {{ item.carbs }} g
+                  {{ product.macro.strRepresentation }}
                 </v-list-item-subtitle>
                 <template v-slot:append>
                   <v-btn icon="mdi-close" variant="text"></v-btn>
@@ -137,45 +102,20 @@ const changeDate = (value) => {
     <v-divider/>
     <v-card class="fixed-section">
       <v-card-text>
-        <v-row class="align-content-center justify-center">
-          <v-col cols="2" class="pr-2">
+        <v-row :key="summaryKey" class="align-content-center justify-center">
+          <v-col
+              v-for="map in summaryMapper"
+              :key="map.key"
+              cols="2"
+              :class="map.cssClass"
+          >
             <macro-progress-linear
-                :value="macros[0].current"
-                :max-value="macros[0].target"
-                :color="macros[0].color"
-                icon="mdi-food-drumstick"
-                unit="g"
-                text="Białko"
-            />
-          </v-col>
-          <v-col cols="2" class="px-4">
-            <macro-progress-linear
-                :value="macros[1].current"
-                :max-value="macros[1].target"
-                :color="macros[1].color"
-                icon="mdi-cheese"
-                unit="g"
-                text="Tłuszcze"
-            />
-          </v-col>
-          <v-col cols="2" class="pr-2">
-            <macro-progress-linear
-                :value="macros[2].current"
-                :max-value="macros[2].target"
-                :color="macros[2].color"
-                icon="mdi-barley"
-                unit="g"
-                text="Węgle"
-            />
-          </v-col>
-          <v-col cols="2" class="pr-2">
-            <macro-progress-linear
-                :value="macros[3].current"
-                :max-value="macros[3].target"
-                :color="macros[3].color"
-                icon="mdi-fire"
-                unit="kcal"
-                text="Kalorie"
+                :value="myDay?.summary ? myDay.summary[map.key] : 0.0"
+                :max-value="myDay?.user ? myDay.user[map.key] : 0.0"
+                :color="map.color"
+                :icon="map.icon"
+                :unit="map.unit"
+                :text="map.text"
             />
           </v-col>
         </v-row>

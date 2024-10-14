@@ -12,7 +12,7 @@ const axiosInstance = (token: ComputedRef<string>, authRejectCallback: authRejec
         timeout: 10000,
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token.value}`
+            Authorization: `Bearer ${token.value}`
         }
     };
     const axiosIn = axios.create(baseConfig);

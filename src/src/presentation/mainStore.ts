@@ -25,8 +25,8 @@ export const useMainStore = defineStore('main', () => {
             token.value = newToken
         }
 
-        function setUserId(userId: string) {
-            token.value = userId
+        function setUserId(newUserId: string) {
+            userId.value = newUserId
         }
 
         // method(s)

@@ -8,7 +8,7 @@ export class ConsumedProduct extends Entity<ConsumedProduct> {
         public productId: string,
         public weightInGrams: number,
         public type: string,
-        public product: Product,
+        public baseProduct: Product,
         public macro: Macro,
     ) {
         super(id);
@@ -23,7 +23,7 @@ export class ConsumedProduct extends Entity<ConsumedProduct> {
             Product.fromJSON(json.product),
             new Macro(
                 '',
-                json.energy_kcal,
+                json.calories,
                 json.proteins,
                 json.carbohydrates,
                 json.fat,

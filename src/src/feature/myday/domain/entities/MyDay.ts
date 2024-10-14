@@ -1,13 +1,14 @@
 import Entity from "@/core/domain/Entity";
 import {Macro} from "@/core/domain/Macro";
 import {ConsumedProduct} from "@/feature/myday/domain/entities/ConsumedProduct";
+import {Meal} from "@/feature/myday/domain/entities/Meal";
 
 export class MyDay extends Entity<MyDay> {
     constructor(
         id: string | undefined,
         public userId: string,
         public date: string | Date,
-        public consumedProducts: ConsumedProduct[],
+        public meals: Meal[],
         public summary: Macro,
         public user: Macro,
     ) {
@@ -44,20 +45,20 @@ export class MyDay extends Entity<MyDay> {
             json.id,
             json.user_id,
             json.date,
-            json.products.map((product: any) => ConsumedProduct.fromJSON(product)),
+            json.meals.map((meal: any) => Meal.fromJSON(meal)),
             new Macro(
                 '',
-                json.summary.kcal,
-                json.summary.protein,
+                json.summary.calories,
+                json.summary.proteins,
                 json.summary.carbs,
-                json.summary.fat,
+                json.summary.fats,
             ),
             new Macro(
                 '',
-                json.user.kcal,
-                json.user.protein,
+                json.user.calories,
+                json.user.proteins,
                 json.user.carbs,
-                json.user.fat,
+                json.user.fats,
             )
         );
     }

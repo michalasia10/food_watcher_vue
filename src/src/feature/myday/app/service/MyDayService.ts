@@ -9,14 +9,14 @@ export class MyDayService {
     }
 
     async findByDateTime(date: Date): Promise<MyDay | null> {
-        return this.myDayRepository.findByDateTime(date)
+        return await this.myDayRepository.findByDateTime(date)
     }
 
     async findAllByMe(page: number = 0, limit: number = 20): Promise<MyDay[]> {
-        return this.myDayRepository.findAllByMe(page, limit);
+        return await this.myDayRepository.findAllByMe(page, limit);
     }
 
     async addMeal(meal: Meal): Promise<void> {
-        return this.myDayRepository.addMeal(meal);
+        return await this.myDayRepository.addMeal(meal);
     }
 }
